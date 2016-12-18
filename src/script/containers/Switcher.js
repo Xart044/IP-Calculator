@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View,Text,Switch} from 'react-native';
+import {View,Text,Switch,StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -19,26 +19,38 @@ class Switcher extends Component {
 	}
 	render() {
 		return (
-			<View>
-				<Text>
-					{this.state.switchStatus ? 'binary system' : 'decimal system'}
+			<View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between',alignItems:'center'}}>
+				<Text style={styles.header}>
+					IP Calculator
 				</Text>
-				<Switch
-					onValueChange={this.switchAction.bind(this)}
-					style={{marginBottom: 10}}
-					value={this.state.switchStatus} 
-				/>
+				<View style={{flex: 1, flexDirection: 'row', justifyContent:'flex-end'}}>
+					<Text style={{fontWeight: 'bold'}}>
+						{this.state.switchStatus ? 'binary system' : 'decimal system'}
+					</Text>
+					<Switch
+						onValueChange={this.switchAction.bind(this)}
+						style={{marginBottom: 10}}
+						value={this.state.switchStatus} 
+					/>
+				</View>
 			</View>
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+	header:{
+		marginLeft: 20,
+		fontWeight: 'bold',
+		fontSize: 25,		
+	}
+});
 
 function mapStateToProps(state) {
     return {
         ip: state.ip
     }
 }
-
 
 function mapDispatchToProps(dispatch) {
     return {

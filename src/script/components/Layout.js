@@ -7,101 +7,9 @@ import TextField from './../containers/TextField';
 import Switcher from './../containers/Switcher';
 import ResultComponent from './ResultComponent';
 
-import { ipChangeEvent, getMaskLength } from '../actions/ipActions';
-
-const decRegExp = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-const binRegExp = /\b[01]{8}\.[01]{8}\.[01]{8}\.[01]{8}\b/;
-
-function validateIp(checkingaddress, regExp, ip, mask = false, type = 'decimal') {
-	if(mask){
-		let maskInBinSystem;
-    	if(type === 'decimal'){
-    		maskInBinSystem = decToBinOuter(ip, checkingaddress);
-    	}
-    	maskInBinSystem = maskInBinSystem ? maskInBinSystem : checkingaddress;
-    	const isMaskValid = validateMask(maskInBinSystem[1]);
-		if(!isMaskValid){
-			return false;
-		}
-    }
-    if (regExp.test(checkingaddress)) {
-        return true;
-    }
-    return false;
-}
-
-function validateMask(mask){
-	let maskString = mask.replace('.', ''),
-		isValid = true;
-	maskString = maskString.substring(0,maskString.lastIndexOf('1'));
-	maskString = maskString.split('').map((el,ind)=>{
-		if(el === '0'){
-			isValid = false;
-		}
-	})
-	return isValid;
-}
-
-function decToBinOuter (ip,mask) {
-	console.log(ip,mask)
-	let resultArray = [];
-	if(ip){
-		let ipArray = ip.split('.');
-		ipArray = decToBinInner(ipArray);
-		resultArray.push(ipArray);
-	}
-	if(mask){
-		let maskArray  = mask.split('.');
-		maskArray = decToBinInner(maskArray);
-		resultArray.push(maskArray);
-	}
-	return resultArray;
-}
-
-function decToBinInner(array){
-	array = array.map((elOut,indOut)=>{
-		let parsedElem = parseInt(elOut),
-			binElem = parsedElem.toString(2);
-		if(binElem.length!==8){
-			const lengthDiff = 8 - binElem.length,
-				  diffArray = Array(lengthDiff).fill('0');
-			let  resultArray = [binElem];
-			resultArray = resultArray.concat(diffArray).reverse();
-			resultArray = resultArray.join('');
-			binElem = resultArray;
-		}
-		return binElem;
-	})
-	return array.join('.');
-}
-
-function binToDecOuter (ip,mask){
-	const resultArray = [];
-	if(ip){
-		let ipArray = ip.split('.');
-		ipArray = binToDecInner(ipArray);
-		resultArray.push(ipArray);
-	}
-	if(mask){
-		let maskArray = mask.split('.');
-		maskArray = binToDecInner(maskArray);
-		resultArray.push(maskArray);
-	}
-
-return resultArray;
-}
-
-function binToDecInner(array){
-	array = array.map((elOut,indOut)=>{
-		let elArray = elOut.split('');
-		elArray = elArray.reverse();
-		elArray = elArray.map((elInn,indInn)=>{
-			return elInn * Math.pow(2,indInn)
-		})
-		return elArray.reduce((a,b)=>a+b,0);
-	})
-	return array.join('.');
-}
+import { ipChangeEvent, getMaskLength } from './../actions/ipActions';
+import { decToBinOuter, binToDecOuter } from './../Remote_Functions/transpiler';
+import { validateIp, decRegExp, binRegExp } from './../Remote_Functions/validation';
 
 function calculateHosts(mask) {
     const dots = /\./gi,
@@ -158,7 +66,7 @@ class Layout extends Component {
     }
     render() {
         return ( 
-        	<View>
+        	<View style={{flex:1,backgroundColor: '#DDF9F1'}}>
 	            <Switcher/>
 	            <TextField 
 		            ChangeHandler = { this.ipChangeHandler.bind(this) }
@@ -172,10 +80,15 @@ class Layout extends Component {
 		            type = { this.props.ip.ip_type }
 		            length = { this.props.ip.ip_type === 'decimal' ? 15 : 35 }
 	            /> 
-	            <Button 
-		            onPress = { this.calculate.bind(this) }
-		            title = "Calculate"
-	            />
+                <View style = {{ flex:0,flexDirection: 'row',justifyContent: 'center' }}>
+                    <View style = {{ width: 200,marginTop:15,marginBottom:15}}>
+                         <Button 
+                            onPress = { this.calculate.bind(this) }
+                            title = "Calculate"
+                            color = "#44B498"
+                        />   
+                    </View>
+                </View>
 	            <ResultComponent ip = {this.props.ip} />
             </View>
         );

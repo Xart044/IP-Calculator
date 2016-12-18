@@ -12,19 +12,21 @@ export default class extends Component {
   }
   render() {
     return (
-    	<View>
+    	<View style={{flex: 1}}>
     		<Text>Write {this.props.label} in {this.props.type} system</Text>
-			<TextInput
-				style={{height: 40}}
-				maxLength = {this.props.length}
-				onChangeText={(text) => this.changeTextEvent(text)}
-				onClick={this.props.handler}
-        placeholder = {this.props.type === 'decimal' ? 
-                        'Example: 127.0.0.1': 
-                        'Example: 11111111.11111111.11111111.00000000'
-                      }
-				value={this.state.text}
-			/>
+  			<TextInput
+  				style={{height: 35}}
+  				maxLength = {this.props.length}
+  				onChangeText={(text) => this.changeTextEvent(text)}
+  				onClick={this.props.handler}
+          placeholder = 
+          {this.props.type === 'decimal' ? 
+            'Example: 255.255.255.000': 
+            'Example: 11111111.11111111.11111111.00000000'
+          }
+          placeholderTextColor="#08A379"
+  				value={this.state.text}
+  			/>
 		</View>
     );
   }
