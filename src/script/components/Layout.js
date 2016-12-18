@@ -14,7 +14,12 @@ import { validateIp, decRegExp, binRegExp } from './../Remote_Functions/validati
 function calculateHosts(mask) {
     const dots = /\./gi,
        	zero = /0/gi,
-   		maskLength = mask.replace(dots, '').replace(zero, '').length;
+   		maskLength = 
+        mask
+            .replace(dots, '')
+            .replace(zero, '')
+            .length;
+            
     return Math.pow(2, 32 - maskLength) - 2;
 }
 

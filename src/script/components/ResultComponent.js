@@ -4,9 +4,10 @@ import {View,Text,StyleSheet} from 'react-native';
 export default class extends Component {
 	render() {
 		let InformationBlock;
-		if(this.props.ip.mask_length){
-			InformationBlock = <View>
-								<Text style={styles.textElem}>
+		if(this.props.ip.mask_length !== ''){
+			InformationBlock = 
+			<View>
+				<Text style={styles.textElem}>
 					IP in decimal system: {this.props.ip.ip_dec}
 				</Text>
 				<Text style={styles.textElem}>

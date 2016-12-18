@@ -20,7 +20,8 @@ export default class extends Component {
   				onChangeText={(text) => this.changeTextEvent(text)}
   				onClick={this.props.handler}
           placeholder = 
-          {this.props.type === 'decimal' ? 
+          {
+            this.props.type === 'decimal' ? 
             'Example: 255.255.255.000': 
             'Example: 11111111.11111111.11111111.00000000'
           }

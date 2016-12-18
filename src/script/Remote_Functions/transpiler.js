@@ -14,20 +14,19 @@ export function decToBinOuter (ip,mask) {
 }
 
 function decToBinInner(array){
-	array = array.map((elOut,indOut)=>{
-		let parsedElem = parseInt(elOut),
-			binElem = parsedElem.toString(2);
+	return array.map((elOut,indOut)=>{
+		let binElem = parseInt(elOut).toString(2);
 		if(binElem.length!==8){
-			const lengthDiff = 8 - binElem.length,
-				  diffArray = Array(lengthDiff).fill('0');
-			let  resultArray = [binElem];
-			resultArray = resultArray.concat(diffArray).reverse();
-			resultArray = resultArray.join('');
-			binElem = resultArray;
+			const diffArray = Array(8 - binElem.length).fill('0');
+			binElem = 
+			[binElem]
+			.concat(diffArray)
+			.reverse()
+			.join('');
 		}
 		return binElem;
 	})
-	return array.join('.');
+	.join('.');
 }
 
 export function binToDecOuter (ip,mask){
@@ -47,13 +46,14 @@ return resultArray;
 }
 
 function binToDecInner(array){
-	array = array.map((elOut,indOut)=>{
-		let elArray = elOut.split('');
-		elArray = elArray.reverse();
-		elArray = elArray.map((elInn,indInn)=>{
+	return array.map((elOut,indOut)=>{
+		return elOut
+		.split('')
+		.reverse()
+		.map((elInn,indInn)=>{
 			return elInn * Math.pow(2,indInn)
 		})
-		return elArray.reduce((a,b)=>a+b,0);
+		.reduce((a,b)=>a+b,0);
 	})
-	return array.join('.');
+	.join('.');
 }

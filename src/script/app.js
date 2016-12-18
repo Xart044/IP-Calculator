@@ -8,7 +8,6 @@ const store = configureStore();
 
 class ipcalc extends Component {
   render() {
-  	console.log('started debugging')
     return (
     	<Provider store={store}>
       		<Layout/>

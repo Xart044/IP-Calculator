@@ -11,11 +11,13 @@ export function validateIp(checkingaddress, regExp, ip, mask = false, type = 'de
     		maskInBinSystem = decToBinOuter(ip, checkingaddress);
     	}
     	maskInBinSystem = maskInBinSystem ? maskInBinSystem[1] : checkingaddress;
-    	console.log(maskInBinSystem);
     	const isMaskValid = validateMask(maskInBinSystem);
 		if(!isMaskValid){
 			return false;
 		}
+	    if(maskInBinSystem==='11111111.11111111.11111111.11111111'){
+	    	return false;
+	    }
     }
     if (regExp.test(checkingaddress)) {
         return true;
@@ -24,12 +26,12 @@ export function validateIp(checkingaddress, regExp, ip, mask = false, type = 'de
 }
 
 export function validateMask(mask){
-	console.log(mask)
-	let maskString = mask.replace('.', ''),
-		isValid = true;
-	maskString = maskString.substring(0,maskString.lastIndexOf('1'));
-	console.log(maskString,isValid);
-	maskString = maskString.split('').map((el,ind)=>{
+	let isValid = true;
+	mask =
+	mask
+	.substring(0,mask.lastIndexOf('1'))
+	.split('')
+	.map((el,ind)=>{
 		if(el === '0'){
 			isValid = false;
 		}
