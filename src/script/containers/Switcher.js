@@ -3,7 +3,7 @@ import {View,Text,Switch} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import {typeChangeEvent} from '../actions/ipActions';
+import {typeChangeEvent,ResetAddress} from '../actions/ipActions';
 
 class Switcher extends Component {
 	state = {
@@ -11,10 +11,11 @@ class Switcher extends Component {
 	};
 	switchAction(value){
 		const ip_type = this.props.ip.ip_type;
-		this.props.typeChangeEvent(ip_type);
 		this.setState({
 			switchStatus: value
 		});
+		this.props.typeChangeEvent(ip_type);
+		this.props.ResetAddress();
 	}
 	render() {
 		return (
@@ -41,7 +42,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-       	typeChangeEvent: bindActionCreators(typeChangeEvent, dispatch)
+       	typeChangeEvent: bindActionCreators(typeChangeEvent, dispatch),
+       	ResetAddress: bindActionCreators(ResetAddress, dispatch)
     }
 }
 

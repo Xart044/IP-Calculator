@@ -13,7 +13,7 @@ export default class extends Component {
   render() {
     return (
     	<View>
-    		<Text>{this.props.label} in {this.props.type} system</Text>
+    		<Text>Write {this.props.label} in {this.props.type} system</Text>
 			<TextInput
 				style={{height: 40}}
 				maxLength = {this.props.length}
