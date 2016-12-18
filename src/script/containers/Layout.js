@@ -3,9 +3,9 @@ import { View, Alert, Button, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import TextField from './../containers/TextField';
-import Switcher from './../containers/Switcher';
-import ResultComponent from './ResultComponent';
+import TextField from './../components/TextField';
+import Switcher from './Switcher';
+import ResultComponent from './../components/ResultComponent';
 
 import { ipChangeEvent, getMaskLength } from './../actions/ipActions';
 import { decToBinOuter, binToDecOuter } from './../Remote_Functions/transpiler';
