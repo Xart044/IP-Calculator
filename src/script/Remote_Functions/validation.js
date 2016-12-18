@@ -10,8 +10,9 @@ export function validateIp(checkingaddress, regExp, ip, mask = false, type = 'de
     	if(type === 'decimal'){
     		maskInBinSystem = decToBinOuter(ip, checkingaddress);
     	}
-    	maskInBinSystem = maskInBinSystem ? maskInBinSystem : checkingaddress;
-    	const isMaskValid = validateMask(maskInBinSystem[1]);
+    	maskInBinSystem = maskInBinSystem ? maskInBinSystem[1] : checkingaddress;
+    	console.log(maskInBinSystem);
+    	const isMaskValid = validateMask(maskInBinSystem);
 		if(!isMaskValid){
 			return false;
 		}
@@ -23,9 +24,11 @@ export function validateIp(checkingaddress, regExp, ip, mask = false, type = 'de
 }
 
 export function validateMask(mask){
+	console.log(mask)
 	let maskString = mask.replace('.', ''),
 		isValid = true;
 	maskString = maskString.substring(0,maskString.lastIndexOf('1'));
+	console.log(maskString,isValid);
 	maskString = maskString.split('').map((el,ind)=>{
 		if(el === '0'){
 			isValid = false;

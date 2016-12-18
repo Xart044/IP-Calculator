@@ -50,7 +50,7 @@ class Layout extends Component {
             	[calculatedIp, calculatedMask] = binToDecOuter(ip,mask);
             	this.props.ipChangeEvent(calculatedIp, ip, calculatedMask, mask);
             }
-            maskLength = calculateHosts(calculatedMask);
+            maskLength = calculateHosts(mask_bin);
             this.props.getMaskLength(maskLength);
         }
     }
