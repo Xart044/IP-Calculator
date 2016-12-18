@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  View,
-  Text,
-  Image
-} from 'react-native';
+import {AppRegistry} from 'react-native';
+import {Provider} from 'react-redux';
+import configureStore from './store/store';
+import Layout from './components/Layout';
+
+const store = configureStore();
 
 class ipcalc extends Component {
   render() {
+  	console.log('started debugging')
     return (
-		<View>
-        <Image source={{uri: 'https://i.chzbgr.com/full/7345954048/h7E2C65F9/'}} />
-	      <Text>
-	        IP calculator
-	      </Text>		
-		</View>
+    	<Provider store={store}>
+      		<Layout/>
+      	</Provider>
     );
   }
 }
